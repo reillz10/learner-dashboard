@@ -3,6 +3,7 @@
 const Merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.config.js');
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -69,6 +70,28 @@ module.exports = Merge.smart(commonConfig, {
         test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
       },
+      {
+        test: /\.(jpe?g|png|gif|ico)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              optimizationlevel: 7,
+              mozjpeg: {
+                progressive: true,
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+            },
+          },
+        ],
+      },
     ],
   },
   // New in Webpack 4. Replaces CommonChunksPlugin. Extract common modules among all chunks to one
@@ -90,6 +113,17 @@ module.exports = Merge.smart(commonConfig, {
     new HtmlWebpackPlugin({
       inject: true, // Appends script tags linking to the webpack bundles at the end of the body
       template: path.resolve(__dirname, '../public/index.html'),
+    }),
+    new webpack.EnvironmentPlugin({
+      // default values of undefined to force definition in the environment at build time
+      NODE_ENV: 'production',
+      BASE_URL: null,
+      LMS_BASE_URL: undefined,
+      LOGIN_URL: null,
+      LOGOUT_URL: null,
+      REFRESH_ACCESS_TOKEN_ENDPOINT: null,
+      ACCESS_TOKEN_COOKIE_NAME: undefined,
+      CSRF_COOKIE_NAME: 'csrftoken',
     }),
   ],
 });

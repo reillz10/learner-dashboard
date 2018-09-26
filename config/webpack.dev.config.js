@@ -64,6 +64,28 @@ module.exports = Merge.smart(commonConfig, {
         test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
       },
+      {
+        test: /\.(jpe?g|png|gif|ico)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              optimizationlevel: 7,
+              mozjpeg: {
+                progressive: true,
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
+            },
+          },
+        ],
+      },
     ],
   },
   // Specify additional processing or side-effects done on the Webpack output bundles as a whole.
@@ -77,6 +99,16 @@ module.exports = Merge.smart(commonConfig, {
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration
     // https://webpack.js.org/configuration/dev-server/#devserver-hot
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      BASE_URL: 'localhost:1991',
+      LMS_BASE_URL: 'http://localhost:18000',
+      LOGIN_URL: 'http://localhost:18000/login',
+      LOGOUT_URL: 'http://localhost:18000/login',
+      REFRESH_ACCESS_TOKEN_ENDPOINT: 'http://localhost:18000/login',
+      ACCESS_TOKEN_COOKIE_NAME: 'edx-jwt-cookie-header-payload',
+      CSRF_COOKIE_NAME: 'csrftoken',
+    }),
   ],
   // This configures webpack-dev-server which serves bundles from memory and provides live
   // reloading.
