@@ -19,7 +19,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
+    const { email, username } = this.props;
     return (
       <header className="container">
         <nav className="navbar px-0 justify-content-between">
