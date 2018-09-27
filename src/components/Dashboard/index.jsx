@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import DashboardMock from '../../images/dashboard.png';
+import Img from '../Img';
 
 class Dashboard extends React.Component {
   constructor(props) {
