@@ -32,6 +32,12 @@ class Header extends React.Component {
             </Link>
             <span className="badge badge-secondary beta">Beta</span>
           </div>
+          {username && <Dropdown
+            title={username}
+            menuItems={[
+              <a href={`${process.env.LMS_BASE_URL}/u/${username}`}>Profile</a>,
+            ]}
+          />}
           {email && <Dropdown
             title={email}
             menuItems={[
@@ -46,10 +52,12 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string,
+  username: PropTypes.string,
 };
 
 Header.defaultProps = {
   email: null,
+  username: null,
 };
 
 export default Header;
