@@ -36,7 +36,8 @@ class Header extends React.Component {
             title={email}
             menuItems={[
               <a href={`${process.env.LMS_BASE_URL}/u/${username}`}>Profile</a>,
-              <a href={process.env.LOGOUT_URL}>Logout</a>,
+              <a href={`${process.env.LMS_BASE_URL}/account/settings`}>Account</a>,
+              <a href={process.env.LOGOUT_URL}>Sign Out</a>,
             ]}
           />}
         </nav>
