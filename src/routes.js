@@ -41,6 +41,6 @@ class RouteConfiguration {
 
 export default function getRouteConfig() {
   return new RouteConfiguration([
-    { path: '/', component: DashboardPage, private: true },
+    { path: '/', component: DashboardPage, private: false },
   ]);
 }
