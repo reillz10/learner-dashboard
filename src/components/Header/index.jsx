@@ -32,15 +32,10 @@ class Header extends React.Component {
             </Link>
             <span className="badge badge-secondary beta">Beta</span>
           </div>
-          {username && <Dropdown
-            title={username}
-            menuItems={[
-              <a href={`${process.env.LMS_BASE_URL}/u/${username}`}>Profile</a>,
-            ]}
-          />}
           {email && <Dropdown
             title={email}
             menuItems={[
+              <a href={`${process.env.LMS_BASE_URL}/u/${username}`}>Profile</a>,
               <a href={process.env.LOGOUT_URL}>Logout</a>,
             ]}
           />}
